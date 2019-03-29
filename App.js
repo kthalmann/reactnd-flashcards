@@ -1,21 +1,28 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { createAppContainer, createStackNavigator } from 'react-navigation'
+import DeckList from './components/DeckList'
+import NewDeck from './components/NewDeck'
+import Reactotron from './ReactotronConfig'
 
 export default class App extends React.Component {
   render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    )
+    return <AppContainer />
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
+const MainNavigator = createStackNavigator({
+  Decks: {
+    screen: DeckList,
+    navigationOptions: {
+      title: 'Decks'
+    }
+  },
+  NewDeck: {
+    screen: NewDeck,
+    navigationOptions: {
+      title: 'New Deck'
+    }
   }
 })
+
+const AppContainer = createAppContainer(MainNavigator)
