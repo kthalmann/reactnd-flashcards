@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
-import { Button } from 'react-native-elements'
+import { View, Text, Button } from 'react-native'
 import styled from 'styled-components/native'
 import { _addCardToDeck, _addDeck, _getDeck } from '../utils/api'
 import { ButtonContainer } from '../utils/helpers'
@@ -59,8 +58,7 @@ export default class Deck extends Component {
         <ButtonContainer>
           <Button
             title="Start quiz"
-            large
-            raised
+            disabled={questions.length < 1}
             onPress={_ => navigation.navigate('Quiz', { deckname: title })}
           />
           <Button
