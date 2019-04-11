@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TextInput, Button } from 'react-native'
 import styled from 'styled-components/native'
-import StyledSubmitButton from './StyledSubmitButton'
 import { _addDeck, _getDecks } from '../utils/api'
 
 const StyledText = styled.Text`
@@ -31,10 +30,12 @@ export default class NewDeck extends Component {
       questions: []
     }
 
-    _addDeck(newDeck, textInput).then(_ => {
-      console.log('saved new deck')
-      _getDecks().then(entries => console.log(entries))
-    })
+    _addDeck(newDeck, textInput)
+      .then(_ => {
+        console.log('saved new deck')
+        _getDecks().then(entries => console.log(entries))
+      })
+      .then(this.props.navigation.navigate('Decks'))
   }
 
   render() {
@@ -53,7 +54,6 @@ export default class NewDeck extends Component {
         </View>
         <View style={{ margin: 50 }}>
           <Button title="Submit" onPress={this.onSubmit} />
-          {/*<StyledSubmitButton />*/}
         </View>
       </View>
     )

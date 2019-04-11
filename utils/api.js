@@ -15,6 +15,10 @@ export const _getDecks = async () => {
   } catch (e) {}
 }
 
+export const _getDeck = async deckname => {
+  return _getDecks().then(decks => decks.find(deck => deck.title === deckname))
+}
+
 export const _addDeck = async (entry, key) => {
   try {
     return await AsyncStorage.mergeItem(
@@ -26,8 +30,12 @@ export const _addDeck = async (entry, key) => {
   } catch (e) {}
 }
 
-export const _addCard = async () => {
+export const _addCardToDeck = async (deckname, card) => {
   try {
-    await AsyncStorage.setItem(STORE_KEY, 'first save')
+    return await _getDeck(deckname).then(deck => {
+      deck.questions = [...deck.questions, card]
+
+      return _addDeck(deck, deck.title)
+    })
   } catch (e) {}
 }

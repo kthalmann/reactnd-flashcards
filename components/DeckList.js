@@ -1,5 +1,11 @@
 import React, { Component } from 'react'
-import { Text, View, TouchableNativeFeedback, FlatList } from 'react-native'
+import {
+  Text,
+  View,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  FlatList
+} from 'react-native'
 import { _getDecks } from '../utils/api'
 import styled from 'styled-components/native'
 import { AntDesign } from '@expo/vector-icons'
@@ -20,7 +26,6 @@ const StyledButtonContent = styled.View`
   border-radius: 50;
   margin-bottom: 30px;
   margin-right: 30px;
-  overflow: hidden;
   justify-content: center;
   align-items: center;
 `
@@ -40,36 +45,60 @@ const AddDeckButton = ({ onPress }) => {
   )
 }
 
+const DeckListItemTitle = styled.Text`
+  font-size: 42px;
+  font-weight: bold;
+  text-align: center;
+`
+
+const DeckListItemCards = styled.Text`
+  font-size: 22px;
+  text-align: center;
+`
+
+const DeckListItem = ({ name, cardCount, navigation, style }) => {
+  return (
+    <View style={style}>
+      <TouchableOpacity onPress={_ => navigation.navigate('Deck', { name })}>
+        <DeckListItemTitle>{name}</DeckListItemTitle>
+        <DeckListItemCards>{cardCount} cards</DeckListItemCards>
+      </TouchableOpacity>
+    </View>
+  )
+}
+
+const StyledDeckListItem = styled(DeckListItem)`
+  height: 150px;
+  padding: 30px;
+  background-color: #f7f7f7;
+  margin-bottom: 1px;
+`
+
 export default class DeckList extends Component {
   state = {
     decks: null
   }
 
   componentDidMount() {
-    console.log('DeckList component mounted')
-
-    _getDecks()
-      // .then(entries => console.log(entries))
-      .then(entries => {
-        console.log('retrieved entries: ', entries)
-        this.setState({ decks: entries })
-      })
+    _getDecks().then(entries => {
+      console.log('retrieved entries: ', entries)
+      this.setState({ decks: entries })
+    })
   }
 
-  handleOnPress() {}
+  _keyExtractor = (item, index) => item.title
 
-  renderItem = ({ title, questions }) => (
-    <View>
-      <Text>{title}</Text>
-      <Text>{questions.length} cards</Text>
-    </View>
+  renderItem = ({ item }) => (
+    <StyledDeckListItem
+      name={item.title}
+      cardCount={item.questions.length}
+      navigation={this.props.navigation}
+    />
   )
 
   render() {
     const { decks } = this.state
     const { navigation } = this.props
-    console.log('render DeckList')
-    console.log('data: ', decks)
 
     return (
       <View style={{ flex: 1, justifyContent: 'flex-end' }}>
@@ -77,7 +106,8 @@ export default class DeckList extends Component {
         <FlatList
           style={{ flex: 1 }}
           data={decks}
-          renderItem={({ item }) => this.renderItem(item)}
+          renderItem={this.renderItem}
+          keyExtractor={this._keyExtractor}
         />
         <AddDeckButtonContainer>
           <AddDeckButton onPress={_ => navigation.navigate('NewDeck')} />
