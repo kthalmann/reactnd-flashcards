@@ -19,12 +19,12 @@ export const _getDeck = async deckname => {
   return _getDecks().then(decks => decks.find(deck => deck.title === deckname))
 }
 
-export const _addDeck = async (entry, key) => {
+export const _addDeck = async entry => {
   try {
     return await AsyncStorage.mergeItem(
       DECK_STORAGE_KEY,
       JSON.stringify({
-        [key]: entry
+        [entry.title]: entry
       })
     )
   } catch (e) {}

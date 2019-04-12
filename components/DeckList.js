@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   FlatList
 } from 'react-native'
-import { _getDecks } from '../utils/api'
+import { _addDeck, _getDecks } from '../utils/api'
 import styled from 'styled-components/native'
 import { AntDesign } from '@expo/vector-icons'
 
@@ -86,6 +86,14 @@ export default class DeckList extends Component {
     })
   }
 
+  addDeck = deck => {
+    _addDeck(deck).then(_ => {
+      this.setState(previousState => ({
+        decks: [...previousState.decks, deck]
+      }))
+    })
+  }
+
   _keyExtractor = (item, index) => item.title
 
   renderItem = ({ item }) => (
@@ -110,7 +118,11 @@ export default class DeckList extends Component {
           keyExtractor={this._keyExtractor}
         />
         <AddDeckButtonContainer>
-          <AddDeckButton onPress={_ => navigation.navigate('NewDeck')} />
+          <AddDeckButton
+            onPress={_ =>
+              navigation.navigate('NewDeck', { onAddNewDeck: this.addDeck })
+            }
+          />
         </AddDeckButtonContainer>
       </View>
     )

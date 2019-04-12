@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TextInput, Button } from 'react-native'
 import styled from 'styled-components/native'
-import { _addDeck, _getDecks } from '../utils/api'
 
 const StyledText = styled.Text`
   font-size: 42px;
@@ -23,19 +22,16 @@ export default class NewDeck extends Component {
   }
 
   onSubmit = () => {
-    const { textInput } = this.state
+    const { navigation } = this.props
 
     const newDeck = {
-      title: textInput,
+      title: this.state.textInput,
       questions: []
     }
 
-    _addDeck(newDeck, textInput)
-      .then(_ => {
-        console.log('saved new deck')
-        _getDecks().then(entries => console.log(entries))
-      })
-      .then(this.props.navigation.navigate('Decks'))
+    navigation.state.params.onAddNewDeck(newDeck)
+
+    navigation.navigate('Decks')
   }
 
   render() {
@@ -53,7 +49,11 @@ export default class NewDeck extends Component {
           />
         </View>
         <View style={{ margin: 50 }}>
-          <Button title="Submit" onPress={this.onSubmit} />
+          <Button
+            title="Submit"
+            onPress={this.onSubmit}
+            disabled={!textInput.length}
+          />
         </View>
       </View>
     )

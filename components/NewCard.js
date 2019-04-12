@@ -56,7 +56,11 @@ export default class NewCard extends Component {
           />
         </View>
         <View style={{ margin: 50 }}>
-          <Button title="Submit" onPress={this.onSubmit} />
+          <Button
+            title="Submit"
+            onPress={this.onSubmit}
+            disabled={!question || !answer}
+          />
         </View>
       </View>
     )
