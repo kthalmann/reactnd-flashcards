@@ -80,8 +80,14 @@ export default class DeckList extends Component {
   }
 
   componentDidMount() {
+    // add listener to refresh decks every time this component is focused
+    this.props.navigation.addListener('willFocus', () => {
+      this.retrieveDecks()
+    })
+  }
+
+  retrieveDecks() {
     _getDecks().then(entries => {
-      console.log('retrieved entries: ', entries)
       this.setState({ decks: entries })
     })
   }

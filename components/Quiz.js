@@ -32,6 +32,8 @@ const FinishView = ({
   handleRestart,
   navigation
 }) => {
+  const score = Math.round(100 / totalAnswers * rightAnswers)
+
   return (
     <View style={{ flex: 1, justifyContent: 'space-between' }}>
       <View>
@@ -39,7 +41,7 @@ const FinishView = ({
       </View>
       <View>
         <ScoreText>You answered</ScoreText>
-        <Score>{Math.round(100 / totalAnswers * rightAnswers)}%</Score>
+        <Score style={{ color: score > 70 ? 'green' : 'red' }}>{score}%</Score>
         <ScoreText>of the questions correctly</ScoreText>
       </View>
       <ButtonContainer>
