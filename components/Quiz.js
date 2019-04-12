@@ -56,46 +56,46 @@ const FinishView = ({
 export default class Quiz extends Component {
   state = {
     deck: null,
-    current_card: 1,
-    right_answers: 0
+    currentCard: 1,
+    rightAnswers: 0
   }
 
   componentDidMount() {
     const deckname = this.props.navigation.state.params.deckname
 
     _getDeck(deckname).then(deck => this.setState({ deck }))
-
-    console.log(`quiz for ${deckname} mounted`)
   }
 
   onAnswer = isCorrect => {
     this.setState(previousState => ({
-      current_card: previousState.current_card + 1,
-      right_answers: isCorrect
-        ? previousState.right_answers + 1
-        : previousState.right_answers
+      currentCard: previousState.currentCard + 1,
+      rightAnswers: isCorrect
+        ? previousState.rightAnswers + 1
+        : previousState.rightAnswers
     }))
   }
 
   onRestart = _ => {
     this.setState({
-      current_card: 1,
-      right_answers: 0
+      currentCard: 1,
+      rightAnswers: 0
     })
   }
 
   render() {
-    const { deck, current_card, right_answers } = this.state
+    const { deck, currentCard, rightAnswers } = this.state
 
     if (!deck) {
       return <Text>Loading..</Text>
     }
 
-    if (current_card > deck.questions.length) {
+    const questionCount = deck.questions.length
+
+    if (currentCard > questionCount) {
       return (
         <FinishView
-          rightAnswers={right_answers}
-          totalAnswers={deck.questions.length}
+          rightAnswers={rightAnswers}
+          totalAnswers={questionCount}
           handleRestart={this.onRestart}
           navigation={this.props.navigation}
         />
@@ -105,12 +105,15 @@ export default class Quiz extends Component {
     return (
       <View style={{ flex: 1, justifyContent: 'space-between' }}>
         <View>
-          <Text style={{ fontSize: 24, textAlign: 'center', margin: 20 }}>
-            {current_card}/{deck.questions.length}
+          <Text style={{ fontSize: 24, margin: 20 }}>
+            {questionCount - currentCard}/{questionCount}{' '}
+            <Text style={{ fontSize: 18, marginLeft: 20 }}>
+              cards remaining
+            </Text>
           </Text>
           <Card
-            question={deck.questions[current_card - 1].question}
-            answer={deck.questions[current_card - 1].answer}
+            question={deck.questions[currentCard - 1].question}
+            answer={deck.questions[currentCard - 1].answer}
           />
         </View>
         <ButtonContainer>
