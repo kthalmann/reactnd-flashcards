@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, TouchableOpacity } from 'react-native'
 import { _getDeck } from '../utils/api'
 import Card from './Card'
-import { ButtonContainer } from '../utils/helpers'
+import {
+  ButtonContainer,
+  clearLocalNotification,
+  setLocalNotification
+} from '../utils/helpers'
 import styled from 'styled-components/native'
 
 const DoneText = styled.Text`
@@ -55,11 +59,19 @@ const FinishView = ({
   )
 }
 
+const FlipText = styled.Text`
+  font-size: 20px;
+  text-align: center;
+  color: #000;
+`
+
 export default class Quiz extends Component {
   state = {
     deck: null,
     currentCard: 1,
-    rightAnswers: 0
+    rightAnswers: 0,
+    isFlipped: false,
+    isFinished: false
   }
 
   componentDidMount() {
@@ -68,24 +80,45 @@ export default class Quiz extends Component {
     _getDeck(deckname).then(deck => this.setState({ deck }))
   }
 
+  onFlip = _ => {
+    this.setState({
+      isFlipped: !this.state.isFlipped
+    })
+  }
+
   onAnswer = isCorrect => {
+    const isFinished =
+      this.state.currentCard + 1 > this.state.deck.questions.length
+
     this.setState(previousState => ({
+      isFlipped: false,
+      isFinished,
       currentCard: previousState.currentCard + 1,
       rightAnswers: isCorrect
         ? previousState.rightAnswers + 1
         : previousState.rightAnswers
     }))
+
+    // if quiz finished -> clear notifications for today + add new one for tomorrow
+    isFinished && clearLocalNotification().then(setLocalNotification())
   }
 
   onRestart = _ => {
     this.setState({
+      isFinished: false,
       currentCard: 1,
       rightAnswers: 0
     })
   }
 
   render() {
-    const { deck, currentCard, rightAnswers } = this.state
+    const {
+      deck,
+      currentCard,
+      rightAnswers,
+      isFlipped,
+      isFinished
+    } = this.state
 
     if (!deck) {
       return <Text>Loading..</Text>
@@ -93,7 +126,7 @@ export default class Quiz extends Component {
 
     const questionCount = deck.questions.length
 
-    if (currentCard > questionCount) {
+    if (isFinished) {
       return (
         <FinishView
           rightAnswers={rightAnswers}
@@ -113,10 +146,16 @@ export default class Quiz extends Component {
               cards remaining
             </Text>
           </Text>
+        </View>
+        <View style={{ flex: 1 }}>
           <Card
             question={deck.questions[currentCard - 1].question}
             answer={deck.questions[currentCard - 1].answer}
+            isFlipped={isFlipped}
           />
+          <TouchableOpacity onPress={this.onFlip}>
+            <FlipText>{isFlipped ? 'Show question' : 'Show answer'}</FlipText>
+          </TouchableOpacity>
         </View>
         <ButtonContainer>
           <Button title="Correct" onPress={_ => this.onAnswer(true)} />

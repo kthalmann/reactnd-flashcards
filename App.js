@@ -6,8 +6,13 @@ import Deck from './components/Deck'
 import Reactotron from './ReactotronConfig'
 import NewCard from './components/NewCard'
 import Quiz from './components/Quiz'
+import { setLocalNotification } from './utils/helpers'
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
+
   render() {
     return <AppContainer />
   }
