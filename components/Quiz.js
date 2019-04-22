@@ -9,6 +9,7 @@ import {
 } from '../utils/helpers'
 import styled from 'styled-components/native'
 
+// FinishView
 const DoneText = styled.Text`
   margin: 50px 0;
   font-size: 70px;

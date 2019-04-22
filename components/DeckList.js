@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {
-  Text,
   View,
   TouchableNativeFeedback,
   TouchableOpacity,
@@ -10,13 +9,7 @@ import { _addDeck, _getDecks } from '../utils/api'
 import styled from 'styled-components/native'
 import { AntDesign } from '@expo/vector-icons'
 
-const NoDecksText = styled.Text`
-  margin: 30px;
-  font-size: 18px;
-  color: gray;
-  text-align: center;
-`
-
+// AddDeckButton
 const AddDeckButtonContainer = styled.View`
   flex: 1;
   position: absolute;
@@ -52,6 +45,7 @@ const AddDeckButton = ({ onPress }) => {
   )
 }
 
+// DeckListItem
 const DeckListItemTitle = styled.Text`
   font-size: 42px;
   font-weight: bold;
@@ -60,6 +54,7 @@ const DeckListItemTitle = styled.Text`
 
 const DeckListItemCards = styled.Text`
   font-size: 22px;
+  color: #666;
   text-align: center;
 `
 
@@ -68,7 +63,9 @@ const DeckListItem = ({ name, cardCount, navigation, style }) => {
     <View style={style}>
       <TouchableOpacity onPress={_ => navigation.navigate('Deck', { name })}>
         <DeckListItemTitle>{name}</DeckListItemTitle>
-        <DeckListItemCards>{cardCount} cards</DeckListItemCards>
+        <DeckListItemCards>
+          {cardCount} {cardCount === 1 ? 'card' : 'cards'}
+        </DeckListItemCards>
       </TouchableOpacity>
     </View>
   )
@@ -79,6 +76,14 @@ const StyledDeckListItem = styled(DeckListItem)`
   padding: 30px;
   background-color: #f7f7f7;
   margin-bottom: 1px;
+`
+
+// DeckList
+const NoDecksText = styled.Text`
+  margin: 30px;
+  font-size: 18px;
+  color: gray;
+  text-align: center;
 `
 
 export default class DeckList extends Component {
@@ -123,7 +128,7 @@ export default class DeckList extends Component {
 
     return (
       <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-        {!decks && <NoDecksText>Start by creating a deck</NoDecksText>}
+        {!decks.length && <NoDecksText>Start by creating a deck</NoDecksText>}
         <FlatList
           style={{ flex: 1 }}
           data={decks}

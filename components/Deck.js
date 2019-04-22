@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Button } from 'react-native'
 import styled from 'styled-components/native'
-import { _addCardToDeck, _addDeck, _getDeck } from '../utils/api'
+import { _addCardToDeck, _getDeck } from '../utils/api'
 import { ButtonContainer } from '../utils/helpers'
 
 const DeckTitle = styled.Text`
@@ -11,8 +11,7 @@ const DeckTitle = styled.Text`
 `
 
 const CardCount = styled.Text`
-  font-size: 28px;
-  font-weight: bold;
+  font-size: 22px;
   text-align: center;
   color: #666;
 `

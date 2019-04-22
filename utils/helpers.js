@@ -4,12 +4,6 @@ import styled from 'styled-components/native'
 import { AsyncStorage } from 'react-native'
 import { Permissions, Notifications } from 'expo'
 
-export const ButtonContainer = styled.View`
-  justify-content: space-between;
-  margin: 50px;
-  height: 100px;
-`
-
 const NOTIFICATION_KEY = 'UdacityFlashcards:notifications'
 
 export function setLocalNotification() {
@@ -61,3 +55,13 @@ function createNotification() {
     }
   }
 }
+
+// ******************************
+// Reused styled components
+// ******************************
+
+export const ButtonContainer = styled.View`
+  justify-content: space-between;
+  margin: 50px;
+  height: 100px;
+`

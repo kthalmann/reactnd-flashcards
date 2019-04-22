@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import FlipCard from 'react-native-flip-card'
 import styled from 'styled-components/native'
 
