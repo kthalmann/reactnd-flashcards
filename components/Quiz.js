@@ -51,8 +51,8 @@ const FinishView = ({
       <ButtonContainer>
         <Button title="Restart quiz" large raised onPress={handleRestart} />
         <Button
-          title="Back to decks"
-          onPress={_ => navigation.navigate('Decks')}
+          title="Back to deck"
+          onPress={_ => navigation.navigate('Deck')}
         />
       </ButtonContainer>
     </View>
