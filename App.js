@@ -3,7 +3,6 @@ import { createAppContainer, createStackNavigator } from 'react-navigation'
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
 import Deck from './components/Deck'
-import Reactotron from './ReactotronConfig'
 import NewCard from './components/NewCard'
 import Quiz from './components/Quiz'
 import { setLocalNotification } from './utils/helpers'
@@ -28,7 +27,6 @@ const MainNavigator = createStackNavigator({
   Deck: {
     screen: Deck,
     navigationOptions: ({ navigation }) => {
-      console.log(navigation)
       return {
         title: `${navigation.state.params.name}    `
       }

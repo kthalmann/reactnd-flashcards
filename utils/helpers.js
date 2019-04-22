@@ -1,5 +1,4 @@
 import React from 'react'
-import { View } from 'react-native'
 import styled from 'styled-components/native'
 import { AsyncStorage } from 'react-native'
 import { Permissions, Notifications } from 'expo'
@@ -11,13 +10,12 @@ export function setLocalNotification() {
   AsyncStorage.getItem(NOTIFICATION_KEY)
     .then(JSON.parse)
     .then(data => {
-      console.log('notification set: ', data)
       if (data === null) {
         Permissions.askAsync(Permissions.NOTIFICATIONS).then(({ status }) => {
-          console.log('notification permission status: ', status)
           if (status === 'granted') {
             Notifications.cancelAllScheduledNotificationsAsync()
 
+            // set date for notifications
             let tomorrow = new Date()
             tomorrow.setDate(tomorrow.getDate() + 1)
             tomorrow.setHours(20)
