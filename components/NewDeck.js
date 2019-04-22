@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, Button } from 'react-native'
+import { View, Button } from 'react-native'
 import styled from 'styled-components/native'
 
 const StyledText = styled.Text`
-  font-size: 42px;
+  font-size: 36px;
   font-weight: bold;
-  margin: 50px;
+  margin: 30px;
   text-align: center;
 `
 
 const StyledInput = styled.TextInput`
-  height: 60px;
-  font-size: 36px;
+  padding: 20px;
+  height: 70px;
+  font-size: 26px;
   background-color: #f8f8f8;
   text-align: center;
 `
@@ -43,7 +44,7 @@ export default class NewDeck extends Component {
           <StyledText>What is the title of your new deck?</StyledText>
           <StyledInput
             value={textInput}
-            placeholder="Enter Name"
+            placeholder="Enter deck name"
             autoFocus={true}
             onChangeText={text => this.setState({ textInput: text })}
           />

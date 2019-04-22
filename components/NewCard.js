@@ -44,7 +44,7 @@ export default class NewCard extends Component {
           <StyledText>Question</StyledText>
           <StyledInput
             value={question}
-            placeholder="Enter Question"
+            placeholder="Enter question"
             autoFocus={true}
             multiline={true}
             onChangeText={text => this.setState({ question: text })}
@@ -52,7 +52,7 @@ export default class NewCard extends Component {
           <StyledText>Answer</StyledText>
           <StyledInput
             value={answer}
-            placeholder="Enter Answer"
+            placeholder="Enter answer"
             autoFocus={true}
             multiline={true}
             onChangeText={text => this.setState({ answer: text })}
