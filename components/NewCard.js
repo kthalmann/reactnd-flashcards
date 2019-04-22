@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Button } from 'react-native'
 import styled from 'styled-components/native'
 
 const StyledText = styled.Text`
-  font-size: 42px;
+  font-size: 36px;
   font-weight: bold;
-  margin: 50px;
+  margin: 30px;
   text-align: center;
 `
 
 const StyledInput = styled.TextInput`
-  height: 60px;
-  font-size: 36px;
+  padding: 20px;
+  height: 136px;
+  font-size: 24px;
   background-color: #f8f8f8;
   text-align: center;
 `
@@ -39,12 +40,13 @@ export default class NewCard extends Component {
 
     return (
       <View style={{ flex: 1, justifyContent: 'space-between' }}>
-        <View>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
           <StyledText>Question</StyledText>
           <StyledInput
             value={question}
             placeholder="Enter Question"
             autoFocus={true}
+            multiline={true}
             onChangeText={text => this.setState({ question: text })}
           />
           <StyledText>Answer</StyledText>
@@ -52,6 +54,7 @@ export default class NewCard extends Component {
             value={answer}
             placeholder="Enter Answer"
             autoFocus={true}
+            multiline={true}
             onChangeText={text => this.setState({ answer: text })}
           />
         </View>
