@@ -53,7 +53,6 @@ export default class NewCard extends Component {
           <StyledInput
             value={answer}
             placeholder="Enter answer"
-            autoFocus={true}
             multiline={true}
             onChangeText={text => this.setState({ answer: text })}
           />
