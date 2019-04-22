@@ -24,15 +24,16 @@ export default class NewDeck extends Component {
 
   onSubmit = () => {
     const { navigation } = this.props
+    const newDeckName = this.state.textInput
 
     const newDeck = {
-      title: this.state.textInput,
+      title: newDeckName,
       questions: []
     }
 
     navigation.state.params.onAddNewDeck(newDeck)
 
-    navigation.navigate('Decks')
+    navigation.replace('Deck', { name: newDeckName })
   }
 
   render() {
