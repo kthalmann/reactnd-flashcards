@@ -10,6 +10,13 @@ import { _addDeck, _getDecks } from '../utils/api'
 import styled from 'styled-components/native'
 import { AntDesign } from '@expo/vector-icons'
 
+const NoDecksText = styled.Text`
+  margin: 30px;
+  font-size: 18px;
+  color: gray;
+  text-align: center;
+`
+
 const AddDeckButtonContainer = styled.View`
   flex: 1;
   position: absolute;
@@ -76,7 +83,7 @@ const StyledDeckListItem = styled(DeckListItem)`
 
 export default class DeckList extends Component {
   state = {
-    decks: null
+    decks: []
   }
 
   componentDidMount() {
@@ -116,7 +123,7 @@ export default class DeckList extends Component {
 
     return (
       <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-        {!decks && <Text>No decks</Text>}
+        {!decks && <NoDecksText>Start by creating a deck</NoDecksText>}
         <FlatList
           style={{ flex: 1 }}
           data={decks}

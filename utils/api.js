@@ -5,6 +5,10 @@ const DECK_STORAGE_KEY = 'UdacityFlashcards:decks'
 export const _getDecks = async () => {
   try {
     const response = await AsyncStorage.getItem(DECK_STORAGE_KEY)
+
+    // no items
+    if (!response) return []
+
     const parsedResponse = JSON.parse(response)
 
     const deckArray = Object.keys(parsedResponse).map(
